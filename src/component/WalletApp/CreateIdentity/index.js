@@ -5,135 +5,17 @@ import {
   Grid,
   StepButton,
   TextField,
+  Avatar,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useMemo, useRef } from "react";
 import { MobileStepper } from "@mui/material";
 import { useState } from "react";
 import { useIdWalletContext } from "../../../context/identity-wallet-context";
-import { SlowBuffer } from "buffer";
-
-const CreatePasswordForm = ({ setPasswordFormData }) => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "space-evenly",
-      }}
-    >
-      <Typography>Create password</Typography>
-      <Input
-        onChange={(e) => {
-          setPasswordFormData((prev) => {
-            return {
-              ...prev,
-              password: e.target.value,
-            };
-          });
-        }}
-        placeholder="Enter password"
-      />
-      <Input
-        onChange={(e) => {
-          setPasswordFormData((prev) => {
-            return {
-              ...prev,
-              confirm: e.target.value,
-            };
-          });
-        }}
-        placeholder="Confirm password"
-      />
-    </Box>
-  );
-};
-
-const Mnemonics = ({ mnemonicsData }) => {
-  console.log("data: ", typeof mnemonicsData);
-  window.mnemonicsData = mnemonicsData;
-  const mnemonicsArray =
-    mnemonicsData !== undefined ? Object.values(mnemonicsData) : [""];
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "space-evenly",
-      }}
-    >
-      <Typography>
-        Your Secret Recovery Phrase is a 12-word phrase that is the “master key”
-        to your identity wallet
-      </Typography>
-      <Grid container>
-        {mnemonicsArray.map((word, index) => {
-          return (
-            <Grid key={index + "-" + word} item xs={4}>
-              <Box
-                sx={{
-                  pl: 1,
-                  py: 1,
-                  pr: 0.5,
-                  borderRadius: 1,
-                  border: "1px solid ",
-                  textAlign: "left",
-                }}
-              >
-                {index + 1}
-                {". "}
-                {word}
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Box>
-  );
-};
-
-const MnemonicsConfirm = ({
-  mnemonicsData,
-  setMnemonicsConfirm,
-  pickedIndex,
-}) => {
-  const handleChangeConfirmData = (e, index) => {
-    setMnemonicsConfirm((prev) => {
-      return {
-        ...prev,
-        [index]: e.target.value,
-      };
-    });
-  };
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        justifyContent: "space-evenly",
-      }}
-    >
-      <Typography>Confirm Recovery Phrase</Typography>
-      <Grid container>
-        {pickedIndex.map((itemIndex, index) => {
-          return (
-            <Grid item xs={6}>
-              <TextField
-                label={parseInt(itemIndex) + 1}
-                onChange={(e) => {
-                  handleChangeConfirmData(e, itemIndex);
-                }}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Box>
-  );
-};
+import CreatePasswordForm from "../component/CreatePasswordForm";
+import Mnemonics from "../component/Mnemonics";
+import MnemonicsConfirm from "../component/MnemonicsConfirm";
+import UserAccount from "../component/UserAccount";
 const CreateIdentity = ({ goBack }) => {
   const { keyContainer } = useIdWalletContext();
   const [activeStep, setActiveStep] = useState(0);
