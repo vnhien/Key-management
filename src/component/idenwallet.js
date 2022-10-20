@@ -1,23 +1,12 @@
 import { Box } from "@mui/system";
 import React from "react";
 import { useState, useEffect } from "react";
-import { Button, Grid, Popper } from "@mui/material";
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
-import NewUser from "./pages/NewUser";
+import { Button, Popper } from "@mui/material";
+import WalletApp from "./WalletApp";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <NewUser />,
-  },
-  {
-    path: "/new-user",
-    element: <NewUser />,
-  },
-]);
 const IdentityWallet = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState();
   const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +25,7 @@ const IdentityWallet = () => {
         placement={placement}
         disablePortal
       >
-        <RouterProvider router={router} />
+        <WalletApp />
       </Popper>
       <Box
         sx={{

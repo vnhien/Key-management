@@ -1,3 +1,8 @@
-child supply column circle pizza giant hard measure essence knee indicate also
-privateKey "177370df83db81538a149e350cd679cbd0474015cd75569511805ce8e77c7f8a"
-publicKey "03d09289d8afd81ffdaa7cf69bfee819260bd028df158a2df08cd3f9dc2639418c"
+attack code put govern rich measure advance repair riot jeans slice cool
+
+privateKey
+: 
+"0e73a5492c02fdf217ca9503402b9a286b1a4e8d1a6fea1c79ff56ccd985b7b3"
+publicKey
+: 
+"021f2a782f9e334328bf3907a86f0fadcdeb1793b778a46f035a4f52e1a5228ee0"

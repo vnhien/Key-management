@@ -1,7 +1,9 @@
 import LocalStorageDB from "../db/localStorageDb";
 import * as bip39 from "bip39";
+// import * as secureBip39 from "@scure/bip39";
+// import { wordlists } from "bip39";
 import { encrypt, decrypt } from "./CryptographyUtils";
-// import HDNode from "hdkey";
+
 const hdkey = require("hdkey");
 const pbkdf2 = require("pbkdf2");
 const nacl = require("tweetnacl");
@@ -32,7 +34,7 @@ export default class KeyContainer {
     this.timer = setTimeout(() => {
       console.log("key expired");
       self.encryptionKey = "";
-    }, 10000);
+    }, 120000);
   }
   isUnlock() {
     if (this.encryptionKey) {
@@ -63,6 +65,14 @@ export default class KeyContainer {
     }
     return decrypt(this.encryptionKey, EncryptedMessage);
   }
+  generateMasterSeed() {
+    if (!this.isUnlock()) {
+      console.log("need password");
+      return;
+    }
+    const mnemonic = bip39.generateMnemonic();
+    return mnemonic;
+  }
   setMasterSeed(InputMnemonic) {
     if (!this.isUnlock()) {
       console.log("need password");
@@ -72,7 +82,6 @@ export default class KeyContainer {
     if (InputMnemonic) {
       if (bip39.validateMnemonic(InputMnemonic)) {
         mnemonic = InputMnemonic;
-
         this.db.insert("ziden-user-masterseed", this.encrypt(mnemonic));
       } else {
         console.log("invalid mnemonic format, using random mnemonic");
@@ -85,6 +94,30 @@ export default class KeyContainer {
     }
     console.log("user mnemonic: ", mnemonic);
   }
+
+  // setMasterSeed(InputMnemonic) {
+  //   if (!this.isUnlock()) {
+  //     console.log("need password");
+  //     return;
+  //   }
+  //   let mnemonic;
+  //   if (InputMnemonic) {
+  //     if (secureBip39.validateMnemonic(InputMnemonic)) {
+  //       mnemonic = InputMnemonic;
+
+  //       this.db.insert("ziden-user-masterseed", this.encrypt(mnemonic));
+  //     } else {
+  //       console.log("invalid mnemonic format, using random mnemonic");
+  //       mnemonic = secureBip39.generateMnemonic();
+  //       this.db.insert("ziden-user-masterseed", this.encrypt(mnemonic));
+  //     }
+  //   } else {
+  //     mnemonic = secureBip39.generateMnemonic();
+  //     this.db.insert("ziden-user-masterseed", this.encrypt(mnemonic));
+  //   }
+  //   console.log("user mnemonic: ", mnemonic);
+  // }
+
   getMasterSeedDecrypted() {
     if (!this.isUnlock()) {
       console.log("need password");
